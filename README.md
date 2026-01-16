@@ -1,58 +1,184 @@
-# E-Commerce Product Recommendation System (Neo4j Graph Database)
-
-This project was developed as part of the CP242 Database Systems course at Srinakharinwirot University. It demonstrates the application of Graph Databases in solving complex data relationship challenges within e-commerce platforms, specifically focusing on personalized recommendation engines.
-
-## 1. Executive Summary
-The system leverages the power of Neo4j, a NoSQL Graph Database, to analyze relationships between users, products, and shops. Unlike traditional Relational Databases (RDBMS) that require heavy JOIN operations, this system utilizes high-performance graph traversals to provide real-time product recommendations based on individual user behavior.
-
-## 2. Key Features
-* **Personalized Recommendation Engine:**
-    * **Category-Based:** Analyzes user purchase history to suggest products from the user's most frequently bought categories.
-    * **Shop-Based:** Recommends new arrivals or popular items from shops the user has previously interacted with (Brand Loyalty).
-* **Weighted Relationship Logic:** Implements a `count` property on the `BOUGHT` relationship to quantify user interest levels, allowing the system to rank recommendations by relevance.
-* **Role-Based Access Control (RBAC):** Features a secure authentication system that distinguishes between regular Users and Administrators, restricting sensitive CRUD operations to authorized personnel.
-* **Full CRUD Operations:** Comprehensive management of Nodes (Account, Product, Shop) and Relationships (Bought, From) using Cypher Query Language (CQL).
-
-## 3. Data Modeling (Graph Structure)
+Neo4j Product Recommendation System
 
 
 
-### Nodes
-* **Account:** Stores user credentials and permissions (username, email, password, role).
-* **Product:** Contains item details (productName, productPrice, category, productTags).
-* **Shop:** Stores vendor information (shopName, shopAddress, shopPhone).
 
-### Relationships (Edges)
-* **BOUGHT:** Connects an `Account` to a `Product` (includes a `count` property for frequency tracking).
-* **FROM:** Connects a `Product` to its originating `Shop`.
 
-## 4. Tech Stack
-* **Database:** Neo4j (Graph Database)
-* **Backend:** Node.js & Express.js
-* **Database Driver:** neo4j-driver for seamless Node.js integration.
-* **Infrastructure:** Docker Desktop for containerized database management.
-* **API Testing:** Postman for endpoint validation and integration testing.
 
-## 5. Technical Implementation (Cypher Query)
 
-Example query for recommending products from categories the user is interested in, excluding items already purchased:
 
-```cypher
-MATCH (u:Account {username: "target_user"})-[:BOUGHT]->(p:Product)
-WITH u, p.category AS preferred_category, count(*) AS weight
-MATCH (rec:Product {category: preferred_category})
-WHERE NOT (u)-[:BOUGHT]->(rec)
-RETURN rec.productName, rec.productPrice, weight
-ORDER BY weight DESC
-LIMIT 10
-6. Installation and SetupDeploy Neo4j via Docker:Bashdocker run \
-    --name neo4j-ecommerce \
-    -p 7474:7474 -p 7687:7687 \
-    -d \
-    --env NEO4J_AUTH=neo4j/your_password \
-    neo4j:latest
+A web-based product recommendation system built with Neo4j (Graph Database), Node.js, and Docker.
+This project demonstrates how graph-based data modeling can efficiently power personalized recommendations in e-commerce applications.
 
-Backend Setup:Bashnpm install
-npm start
+👥 Project Information
 
-7. Key LearningsDesigning Graph-first schemas focused on data interconnectedness rather than static tables.Proficiency in Cypher Query Language (CQL) for complex data analytics.Implementing Full-stack integration between a NoSQL Graph Database and a Node.js REST API.Utilizing Docker for consistent development and deployment environments.Team InformationGroup Name: SELECT * FROM Heart (B01)NameStudent IDJirat Ukongka66102010233Yanapat Pankasane66102010236Rattasart Chantra66102010244Advisor: Asst. Prof. Dr. Waraporn ViyanantInstitution: Srinakharinwirot University
+Project Title: Neo4j Product Recommendation System
+Course: Database Systems (CP242)
+University: Srinakharinwirot University
+Group: SELECT * FROM ใจเธอ (B01)
+
+Team Members
+
+Jiratt U Kongkha — 66102010233
+
+Yanapat Pankasem — 66102010236
+
+Ratthasas Chantra — 66102010244
+
+✨ Features
+
+Graph-based data modeling using Neo4j
+
+User–Product–Shop relationship tracking
+
+Purchase-based recommendation logic
+
+Full CRUD operations with Cypher
+
+Dockerized database setup
+
+REST API with Express.js
+
+🧠 System Overview
+
+Entities are represented as nodes and interactions as relationships:
+
+Account → User
+
+Product → Item for sale
+
+Shop → Product owner
+
+Relationships:
+
+(:Account)-[:BOUGHT {count}]->(:Product) — tracks purchase frequency
+
+(:Product)-[:FROM]->(:Shop)
+
+Recommendations are generated based on:
+
+Same product category
+
+Same shop
+
+Highest purchase count
+
+🛠 Tech Stack
+
+Neo4j — Graph Database
+
+Node.js, Express.js — Backend
+
+Docker / Docker Compose — Containerization
+
+Postman — API Testing
+
+🚀 Getting Started
+Prerequisites
+
+Docker Desktop
+
+Node.js
+
+1. Clone the Repository
+git clone https://github.com/your-username/neo4j-recommendation-system.git
+cd neo4j-recommendation-system
+
+2. Start Neo4j with Docker
+docker-compose up -d
+
+
+Neo4j Browser:
+👉 http://localhost:7474/browser
+
+3. Install Dependencies
+npm install
+
+4. Run the Server
+nodemon server.js
+
+
+API will be available at:
+👉 http://localhost:3000
+
+🔗 API Endpoints (CRUD)
+Create Node
+
+POST /nodes
+
+{
+  "label": "Person",
+  "properties": { "id": "u1", "name": "Alice", "age": 25 }
+}
+
+Read Nodes
+
+GET /nodes/:label
+
+Update Node
+
+PUT /nodes/:label/:id
+
+{
+  "properties": { "age": 26 }
+}
+
+Delete Node
+
+DELETE /nodes/:label/:id
+
+🗂 Data Model
+Node Types
+
+Account
+
+{ "id": "", "username": "", "email": "", "role": "", "password": "" }
+
+
+Product
+
+{ "id": "", "productName": "", "productCategory": "", "productPrice": "", "shopId": "" }
+
+
+Shop
+
+{ "id": "", "shopName": "", "shopAddress": "", "shopPhone": "" }
+
+📈 Recommendation Logic
+
+When a user purchases a product, a BOUGHT relationship is created or updated.
+
+The system analyzes:
+
+Most purchased categories
+
+Most purchased shops
+
+Products with the highest interaction count are recommended.
+
+🐳 Neo4j Cypher Shell (Docker)
+docker exec -it neo4j-container cypher-shell -u neo4j -p Neo4j12345*
+
+
+Exit:
+
+:quit
+
+📁 Project Structure
+.
+├── docker-compose.yml
+├── server.js
+├── package.json
+├── neo4j_database/
+├── models/
+├── controllers/
+└── views/
+
+📄 License
+
+This project is for educational purposes only.
+You are free to modify and extend it.
+
+📚 References
+
+Neo4j Documentation: https://neo4j.com/docs/
