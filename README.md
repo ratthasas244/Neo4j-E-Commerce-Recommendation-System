@@ -51,6 +51,8 @@ LIMIT 10
     -d \
     --env NEO4J_AUTH=neo4j/your_password \
     neo4j:latest
+
 Backend Setup:Bashnpm install
 npm start
+
 7. Key LearningsDesigning Graph-first schemas focused on data interconnectedness rather than static tables.Proficiency in Cypher Query Language (CQL) for complex data analytics.Implementing Full-stack integration between a NoSQL Graph Database and a Node.js REST API.Utilizing Docker for consistent development and deployment environments.Team InformationGroup Name: SELECT * FROM Heart (B01)NameStudent IDJirat Ukongka66102010233Yanapat Pankasane66102010236Rattasart Chantra66102010244Advisor: Asst. Prof. Dr. Waraporn ViyanantInstitution: Srinakharinwirot University
