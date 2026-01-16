@@ -75,20 +75,19 @@ Recommendations are generated based on:
 ```bash
 git clone https://github.com/your-username/neo4j-recommendation-system.git
 cd neo4j-recommendation-system
+
 2. Start Neo4j with Docker
 bash
-คัดลอกโค้ด
 docker-compose up -d
 Neo4j Browser:
 http://localhost:7474/browser
 
 3. Install Dependencies
 bash
-คัดลอกโค้ด
 npm install
+
 4. Run the Server
 bash
-คัดลอกโค้ด
 nodemon server.js
 API will be available at:
 http://localhost:3000
@@ -122,17 +121,14 @@ Node Types
 Account
 
 json
-คัดลอกโค้ด
 { "id": "", "username": "", "email": "", "role": "", "password": "" }
 Product
 
 json
-คัดลอกโค้ด
 { "id": "", "productName": "", "productCategory": "", "productPrice": "", "shopId": "" }
 Shop
 
 json
-คัดลอกโค้ด
 { "id": "", "shopName": "", "shopAddress": "", "shopPhone": "" }
 Recommendation Logic
 When a user purchases a product, a BOUGHT relationship is created or updated.
@@ -147,16 +143,13 @@ Products with the highest interaction count are recommended.
 
 Neo4j Cypher Shell (Docker)
 bash
-คัดลอกโค้ด
 docker exec -it neo4j-container cypher-shell -u neo4j -p Neo4j12345*
 Exit:
 
 cypher
-คัดลอกโค้ด
 :quit
 Project Structure
 pgsql
-คัดลอกโค้ด
 .
 ├── docker-compose.yml
 ├── server.js
