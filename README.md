@@ -1,82 +1,54 @@
-# Neo4j NoSQL Graph Database - Recommendation System
+# 🛒 E-Commerce Recommendation System (Neo4j Graph Database)
 
-A product recommendation system built using Neo4j NoSQL Graph Database to provide personalized suggestions based on individual user behavior and interests.
+![Neo4j](https://img.shields.io/badge/Neo4j-NoSQL-008CC1?style=for-the-badge&logo=neo4j&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Container-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
-## Project Overview
-This project was developed as part of the CP242 Database Systems course at Srinakharinwirot University, Semester 2, Academic Year 2024. The system tracks user interactions, such as purchase frequency per category and shop, to analyze preferences and recommend products effectively.
+โครงการนี้เป็นส่วนหนึ่งของรายวิชา **คพ242 ระบบฐานข้อมูล (Database Systems)** มหาวิทยาลัยศรีนครินทรวิโรฒ โดยมุ่งเน้นการประยุกต์ใช้ฐานข้อมูลแบบกราฟ (Graph Database) เพื่อแก้ปัญหาการจัดการความสัมพันธ์ข้อมูลที่ซับซ้อนในระบบพาณิชย์อิเล็กทรอนิกส์
 
-### Objectives
-1. To develop a web-based recommendation system that adapts to the specific behaviors and interests of each user.
-2. To study and implement a Graph Database (Neo4j) for managing complex data relationships.
+## 📝 บทสรุปโครงการ (Executive Summary)
+ระบบนี้ถูกออกแบบมาเพื่อเพิ่มประสิทธิภาพในการ "แนะนำสินค้า" (Recommendation) ให้ตรงใจผู้ใช้งานแต่ละบุคคล โดยใช้ความสามารถของ **Neo4j** ในการวิเคราะห์ความสัมพันธ์ (Relationships) ระหว่างพฤติกรรมการซื้อของผู้ใช้ หมวดหมู่สินค้า และร้านค้า ซึ่งให้ผลลัพธ์ที่รวดเร็วและยืดหยุ่นกว่าระบบฐานข้อมูลแบบเดิม (Relational Database)
 
-## Tech Stack
-* Database: Neo4j (NoSQL Graph Database)
-* Runtime: Node.js
-* Backend Framework: Express.js
-* Containerization: Docker Desktop
-* API Testing: Postman
+## 🌟 ฟีเจอร์เด่น (Key Features)
+* **Graph Recommendation Engine:**
+    * **Category-Based:** แนะนำสินค้าจากหมวดหมู่ที่ผู้ใช้เคยซื้อบ่อยที่สุด
+    * **Shop-Based:** แนะนำสินค้าใหม่ๆ จากร้านค้าที่ผู้ใช้มีความพึงพอใจหรือซื้อซ้ำ
+* **Dynamic Relationship Management:** บันทึกความสัมพันธ์การซื้อผ่าน Edge `BOUGHT` พร้อมเก็บคุณสมบัติ `count` เพื่อใช้วัดระดับความสนใจ (Weighting)
+* **Role-Based Access Control (RBAC):** แยกสิทธิ์การใช้งานระหว่าง `User` ทั่วไป และ `Admin` อย่างชัดเจน
+* **Full CRUD Integration:** รองรับการเพิ่ม แก้ไข ลบ ข้อมูล Node (Account, Product, Shop) และ Edge ผ่านทาง API
 
-## Data Model
-The system utilizes Nodes and Relationships (Edges) to represent data connections:
+## 📊 โครงสร้างข้อมูล (Data Modeling)
 
-### Nodes
-* Account: User information (ID, Username, Email, Role, Password).
-* Product: Product details (Name, Price, Category, Description).
-* Shop: Store information (Name, Address, Phone Number).
+ระบบประกอบด้วยองค์ประกอบหลักในรูปแบบ Graph ดังนี้:
 
-### Relationships
-* Account -[:BOUGHT]-> Product: Includes a "Count" property to track purchase frequency.
-* Product -[:FROM]-> Shop: Links each product to its respective store.
+### 1. Nodes
+* **Account:** เก็บข้อมูลผู้ใช้ (username, email, password, role)
+* **Product:** ข้อมูลรายละเอียดสินค้า (productName, productPrice, category, productTags)
+* **Shop:** ข้อมูลผู้ขายหรือร้านค้า (shopName, shopAddress, shopPhone)
+
+### 2. Relationships (Edges)
+* `Account -[:BOUGHT {count: n}]-> Product`: แสดงความสัมพันธ์การเป็นเจ้าของสินค้าและจำนวนครั้งที่ซื้อ
+* `Product -[:FROM]-> Shop`: แสดงแหล่งที่มาของสินค้า
 
 
 
-## Installation and Setup
+## 🛠 Tech Stack & Tools
+* **Database:** Neo4j Community Edition
+* **Backend:** Node.js & Express.js
+* **Driver:** `neo4j-driver` สำหรับเชื่อมต่อ Application กับ Database
+* **Containerization:** Docker Desktop สำหรับจัดการ Instance ของ Neo4j
+* **Testing:** Postman สำหรับทดสอบการรับ-ส่งข้อมูล API
 
-### 1. Database Configuration (Docker)
-Create a `docker-compose.yml` file in the root directory:
+## 🚀 ขั้นตอนการติดตั้งและรันระบบ (Setup Instructions)
 
-```yaml
-services:
-  neo4j:
-    image: neo4j:latest
-    container_name: neo4j-container
-    environment:
-      - NEO4J_AUTH=neo4j/Neo4j12345*
-    ports:
-      - "7474:7474"
-      - "7687:7687"
-    volumes:
-      - ./neo4j_database/neo4j_data:/data
-    restart: always
-2. Backend Setup
-Bash
-
-npm init
-npm install express neo4j-driver nodemon body-parser
-nodemon server.js
-Recommendation Logic
-The system generates recommendations based on the highest "Count" value within the "BOUGHT" relationship in two ways:
-
-Category-based: Suggests products within the same category as previously purchased items.
-
-Shop-based: Suggests products from shops the user has frequently interacted with.
-
-Project Conclusion
-The project successfully implemented a personalized product recommendation system using Neo4j NoSQL Graph Database. The use of Nodes and Edges provided excellent efficiency and flexibility in managing and retrieving complex relational data for the website. Despite various challenges during development, this project serves as a valuable resource for further study and extension of graph database applications in commercial systems.
-
-Project Team (Group B01)
-Jirath Ukongka (66102010233)
-
-Yanapat Pankasame (66102010236)
-
-Rattasart Jantra (66102010244)
-
-Acknowledgments
-Instructor: Assistant Professor Dr. Waraporn Viyanont
-
-Course: CP242 Database Systems, Srinakharinwirot University
-
-References
-[k]code. (2022). Neo4j Docker quick start.
-
-Neo4jOfficial. (2025). Neo4j Documentation.
+### 1. การเตรียม Database ด้วย Docker
+ใช้ Docker เพื่อจำลอง Neo4j Server ขึ้นมา:
+```bash
+docker run \
+    --name neo4j-project \
+    -p 7474:7474 -p 7687:7687 \
+    -d \
+    -v $HOME/neo4j/data:/data \
+    -v $HOME/neo4j/logs:/logs \
+    --env NEO4J_AUTH=neo4j/your_password \
+    neo4j:latest
