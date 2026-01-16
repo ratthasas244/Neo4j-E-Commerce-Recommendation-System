@@ -1,54 +1,86 @@
-# 🛒 E-Commerce Recommendation System (Neo4j Graph Database)
+Here is the comprehensive README.md in English, professionally formatted for your resume or GitHub, without emojis, and based on the technical details from your report.
 
-![Neo4j](https://img.shields.io/badge/Neo4j-NoSQL-008CC1?style=for-the-badge&logo=neo4j&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Container-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+Markdown
 
-โครงการนี้เป็นส่วนหนึ่งของรายวิชา **คพ242 ระบบฐานข้อมูล (Database Systems)** มหาวิทยาลัยศรีนครินทรวิโรฒ โดยมุ่งเน้นการประยุกต์ใช้ฐานข้อมูลแบบกราฟ (Graph Database) เพื่อแก้ปัญหาการจัดการความสัมพันธ์ข้อมูลที่ซับซ้อนในระบบพาณิชย์อิเล็กทรอนิกส์
+# E-Commerce Product Recommendation System (Neo4j Graph Database)
 
-## 📝 บทสรุปโครงการ (Executive Summary)
-ระบบนี้ถูกออกแบบมาเพื่อเพิ่มประสิทธิภาพในการ "แนะนำสินค้า" (Recommendation) ให้ตรงใจผู้ใช้งานแต่ละบุคคล โดยใช้ความสามารถของ **Neo4j** ในการวิเคราะห์ความสัมพันธ์ (Relationships) ระหว่างพฤติกรรมการซื้อของผู้ใช้ หมวดหมู่สินค้า และร้านค้า ซึ่งให้ผลลัพธ์ที่รวดเร็วและยืดหยุ่นกว่าระบบฐานข้อมูลแบบเดิม (Relational Database)
+This project was developed as part of the CP242 Database Systems course at Srinakharinwirot University. It demonstrates the application of Graph Databases in solving complex data relationship challenges within e-commerce platforms, specifically focusing on personalized recommendation engines.
 
-## 🌟 ฟีเจอร์เด่น (Key Features)
-* **Graph Recommendation Engine:**
-    * **Category-Based:** แนะนำสินค้าจากหมวดหมู่ที่ผู้ใช้เคยซื้อบ่อยที่สุด
-    * **Shop-Based:** แนะนำสินค้าใหม่ๆ จากร้านค้าที่ผู้ใช้มีความพึงพอใจหรือซื้อซ้ำ
-* **Dynamic Relationship Management:** บันทึกความสัมพันธ์การซื้อผ่าน Edge `BOUGHT` พร้อมเก็บคุณสมบัติ `count` เพื่อใช้วัดระดับความสนใจ (Weighting)
-* **Role-Based Access Control (RBAC):** แยกสิทธิ์การใช้งานระหว่าง `User` ทั่วไป และ `Admin` อย่างชัดเจน
-* **Full CRUD Integration:** รองรับการเพิ่ม แก้ไข ลบ ข้อมูล Node (Account, Product, Shop) และ Edge ผ่านทาง API
+## 1. Executive Summary
+The system leverages the power of Neo4j, a NoSQL Graph Database, to analyze relationships between users, products, and shops. Unlike traditional Relational Databases (RDBMS) that require heavy JOIN operations, this system utilizes high-performance graph traversals to provide real-time product recommendations based on individual user behavior.
 
-## 📊 โครงสร้างข้อมูล (Data Modeling)
+## 2. Key Features
+* **Personalized Recommendation Engine:**
+    * **Category-Based:** Analyzes user purchase history to suggest products from the user's most frequently bought categories.
+    * **Shop-Based:** Recommends new arrivals or popular items from shops the user has previously interacted with (Brand Loyalty).
+* **Weighted Relationship Logic:** Implements a `count` property on the `BOUGHT` relationship to quantify user interest levels, allowing the system to rank recommendations by relevance.
+* **Role-Based Access Control (RBAC):** Features a secure authentication system that distinguishes between regular Users and Administrators, restricting sensitive CRUD operations to authorized personnel.
+* **Full CRUD Operations:** Comprehensive management of Nodes (Account, Product, Shop) and Relationships (Bought, From) using Cypher Query Language (CQL).
 
-ระบบประกอบด้วยองค์ประกอบหลักในรูปแบบ Graph ดังนี้:
+## 3. Data Modeling (Graph Structure)
 
-### 1. Nodes
-* **Account:** เก็บข้อมูลผู้ใช้ (username, email, password, role)
-* **Product:** ข้อมูลรายละเอียดสินค้า (productName, productPrice, category, productTags)
-* **Shop:** ข้อมูลผู้ขายหรือร้านค้า (shopName, shopAddress, shopPhone)
+### Nodes
+* **Account:** Stores user credentials and permissions (username, email, password, role).
+* **Product:** Contains item details (productName, productPrice, category, productTags).
+* **Shop:** Stores vendor information (shopName, shopAddress, shopPhone).
 
-### 2. Relationships (Edges)
-* `Account -[:BOUGHT {count: n}]-> Product`: แสดงความสัมพันธ์การเป็นเจ้าของสินค้าและจำนวนครั้งที่ซื้อ
-* `Product -[:FROM]-> Shop`: แสดงแหล่งที่มาของสินค้า
+### Relationships (Edges)
+* **BOUGHT:** Connects an `Account` to a `Product` (includes a `count` property for frequency tracking).
+* **FROM:** Connects a `Product` to its originating `Shop`.
 
 
 
-## 🛠 Tech Stack & Tools
-* **Database:** Neo4j Community Edition
+## 4. Tech Stack
+* **Database:** Neo4j (Graph Database)
 * **Backend:** Node.js & Express.js
-* **Driver:** `neo4j-driver` สำหรับเชื่อมต่อ Application กับ Database
-* **Containerization:** Docker Desktop สำหรับจัดการ Instance ของ Neo4j
-* **Testing:** Postman สำหรับทดสอบการรับ-ส่งข้อมูล API
+* **Database Driver:** neo4j-driver for seamless Node.js integration.
+* **Infrastructure:** Docker Desktop for containerized database management.
+* **API Testing:** Postman for endpoint validation and integration testing.
 
-## 🚀 ขั้นตอนการติดตั้งและรันระบบ (Setup Instructions)
+## 5. Technical Implementation (Cypher Query)
 
-### 1. การเตรียม Database ด้วย Docker
-ใช้ Docker เพื่อจำลอง Neo4j Server ขึ้นมา:
-```bash
+Example query for recommending products from categories the user is interested in, excluding items already purchased:
+
+```cypher
+MATCH (u:Account {username: "target_user"})-[:BOUGHT]->(p:Product)
+WITH u, p.category AS preferred_category, count(*) AS weight
+MATCH (rec:Product {category: preferred_category})
+WHERE NOT (u)-[:BOUGHT]->(rec)
+RETURN rec.productName, rec.productPrice, weight
+ORDER BY weight DESC
+LIMIT 10
+6. Installation and Setup
+Deploy Neo4j via Docker:
+
+Bash
+
 docker run \
-    --name neo4j-project \
+    --name neo4j-ecommerce \
     -p 7474:7474 -p 7687:7687 \
     -d \
-    -v $HOME/neo4j/data:/data \
-    -v $HOME/neo4j/logs:/logs \
     --env NEO4J_AUTH=neo4j/your_password \
     neo4j:latest
+Backend Setup:
+
+Bash
+
+npm install
+npm start
+7. Key Learnings
+Designing Graph-first schemas focused on data interconnectedness rather than static tables.
+
+Proficiency in Cypher Query Language (CQL) for complex data analytics.
+
+Implementing Full-stack integration between a NoSQL Graph Database and a Node.js REST API.
+
+Utilizing Docker for consistent development and deployment environments.
+
+Developers: Team "SELECT * FROM Heart"
+
+Jirat Ukongka (66102010233)
+
+Yanapat Pankasane (66102010236)
+
+Rattasart Chantra (66102010244)
+
+Advisor: Asst. Prof. Dr. Waraporn Viyanant Institution: Srinakharinwirot University
