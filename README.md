@@ -97,7 +97,6 @@ Create Node
 POST /nodes
 
 json
-คัดลอกโค้ด
 {
   "label": "Person",
   "properties": { "id": "u1", "name": "Alice", "age": 25 }
@@ -109,7 +108,6 @@ Update Node
 PUT /nodes/:label/:id
 
 json
-คัดลอกโค้ด
 {
   "properties": { "age": 26 }
 }
