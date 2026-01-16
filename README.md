@@ -5,12 +5,12 @@
 ![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker&logoColor=white)
 ![Express](https://img.shields.io/badge/Express.js-Framework-000000?logo=express&logoColor=white)
 
-A web-based **product recommendation system** built with **Neo4j (Graph Database)**, **Node.js**, and **Docker**.  
+A web-based product recommendation system built with Neo4j (Graph Database), Node.js, and Docker.  
 This project demonstrates how graph-based data modeling can efficiently power personalized recommendations in e-commerce applications.
 
 ---
 
-## 👥 Project Information
+## Project Information
 
 **Project Title:** Neo4j Product Recommendation System  
 **Course:** Database Systems (CP242)  
@@ -24,18 +24,18 @@ This project demonstrates how graph-based data modeling can efficiently power pe
 
 ---
 
-## ✨ Features
+## Features
 
-- Graph-based data modeling using **Neo4j**
+- Graph-based data modeling using Neo4j
 - User–Product–Shop relationship tracking
 - Purchase-based recommendation logic
-- Full **CRUD operations** with Cypher
+- Full CRUD operations with Cypher
 - Dockerized database setup
 - REST API with Express.js
 
 ---
 
-## 🧠 System Overview
+## System Overview
 
 Entities are represented as nodes and interactions as relationships:
 
@@ -48,26 +48,26 @@ Relationships:
 - `(:Product)-[:FROM]->(:Shop)`
 
 Recommendations are generated based on:
-- Same **product category**
-- Same **shop**
-- Highest purchase **count**
+- Same product category
+- Same shop
+- Highest purchase count
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
-- **Neo4j** — Graph Database  
-- **Node.js**, **Express.js** — Backend  
-- **Docker / Docker Compose** — Containerization  
-- **Postman** — API Testing  
+- Neo4j — Graph Database  
+- Node.js, Express.js — Backend  
+- Docker / Docker Compose — Containerization  
+- Postman — API Testing  
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
-- **Docker Desktop**
-- **Node.js**
+- Docker Desktop
+- Node.js
 
 ---
 
@@ -80,7 +80,7 @@ bash
 คัดลอกโค้ด
 docker-compose up -d
 Neo4j Browser:
-👉 http://localhost:7474/browser
+http://localhost:7474/browser
 
 3. Install Dependencies
 bash
@@ -91,9 +91,9 @@ bash
 คัดลอกโค้ด
 nodemon server.js
 API will be available at:
-👉 http://localhost:3000
+http://localhost:3000
 
-🔗 API Endpoints (CRUD)
+API Endpoints (CRUD)
 Create Node
 POST /nodes
 
@@ -117,7 +117,7 @@ json
 Delete Node
 DELETE /nodes/:label/:id
 
-🗂 Data Model
+Data Model
 Node Types
 Account
 
@@ -134,7 +134,7 @@ Shop
 json
 คัดลอกโค้ด
 { "id": "", "shopName": "", "shopAddress": "", "shopPhone": "" }
-📈 Recommendation Logic
+Recommendation Logic
 When a user purchases a product, a BOUGHT relationship is created or updated.
 
 The system analyzes:
@@ -145,7 +145,7 @@ Most purchased shops
 
 Products with the highest interaction count are recommended.
 
-🐳 Neo4j Cypher Shell (Docker)
+Neo4j Cypher Shell (Docker)
 bash
 คัดลอกโค้ด
 docker exec -it neo4j-container cypher-shell -u neo4j -p Neo4j12345*
@@ -154,7 +154,7 @@ Exit:
 cypher
 คัดลอกโค้ด
 :quit
-📁 Project Structure
+Project Structure
 pgsql
 คัดลอกโค้ด
 .
@@ -165,9 +165,9 @@ pgsql
 ├── models/
 ├── controllers/
 └── views/
-📄 License
+License
 This project is for educational purposes only.
 You are free to modify and extend it.
 
-📚 References
+References
 Neo4j Documentation: https://neo4j.com/docs/
